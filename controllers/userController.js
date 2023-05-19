@@ -88,12 +88,12 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //if the user is created, we send all the required fields in json
   if (user && passwordIsCorrect) {
-    const { _id, firstName, lastName, phone, email, isAdmin } = user;
+    const { _id, firstname, lastname, phone, email, isAdmin } = user;
 
     res.status(200).json({
       _id,
-      firstName,
-      lastName,
+      firstname,
+      lastname,
       phone,
       email,
       isAdmin,
@@ -160,7 +160,6 @@ const isUserLoggedIn = asyncHandler(async (req, res) => {
 });
 
 //logout user
-
 
 module.exports = {
   registerUser,
