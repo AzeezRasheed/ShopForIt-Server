@@ -80,7 +80,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     newPrice,
     event,
     collections,
-    quantity
+    quantity,
   } = req.body;
 
   const product = await Product.findById(id);
