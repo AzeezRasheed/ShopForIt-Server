@@ -145,7 +145,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 //get products
 const getProducts = asyncHandler(async (req, res) => {
-  const product = await Product.find({ user: req.user._id });
+  const product = await Product.find({});
 
   if (!product) {
     res.status(404);
