@@ -13,8 +13,8 @@ const protect = require("../middleware/authMiddleware");
 
 router.post("/", protect, uploads.array("images"), createProduct);
 router.patch("/:id", protect, uploads.array("images"), updateProduct);
-router.get("/", protect, getProducts);
-router.get("/:id", protect, getSingleProduct);
+router.get("/", getProducts);
+router.get("/:id", getSingleProduct);
 router.delete("/:id", protect, deleteProduct);
 router.put("/rating/:id", rateProduct);
 
