@@ -13,6 +13,7 @@ const createProduct = asyncHandler(async (req, res) => {
     oldPrice,
     newPrice,
     event,
+    quantity,
     additionalInfo,
     collections,
   } = req.body;
@@ -52,6 +53,7 @@ const createProduct = asyncHandler(async (req, res) => {
     oldPrice,
     newPrice,
     event,
+    quantity,
     collections,
     additionalInfo,
     image: fileData,
@@ -78,6 +80,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     newPrice,
     event,
     collections,
+    quantity
   } = req.body;
 
   const product = await Product.findById(id);
@@ -131,6 +134,7 @@ const updateProduct = asyncHandler(async (req, res) => {
         event,
         additionalInfo,
         collections,
+        quantity,
         images: Object.keys(fileData).length === 0 ? product?.images : fileData,
       },
       {

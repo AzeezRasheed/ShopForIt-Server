@@ -71,6 +71,11 @@ const productSchema = new Schema({
     type: Number,
     required: true,
   },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
   event: {
     type: String,
     enum: ["Black Friday", "Easter Sunday", null],
