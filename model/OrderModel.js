@@ -31,7 +31,7 @@ const billingDetailsSchema = new Schema({
     required: true,
   },
   tel_whatsapp: {
-    type: number,
+    type: String,
     required: true,
   },
   orderNotes: {
