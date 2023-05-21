@@ -24,11 +24,9 @@ const billingDetailsSchema = new Schema({
   },
   city: {
     type: String,
-    required: true,
   },
   state: {
     type: String,
-    required: true,
   },
   tel_whatsapp: {
     type: String,
@@ -36,7 +34,6 @@ const billingDetailsSchema = new Schema({
   },
   orderNotes: {
     type: String,
-    required: true,
   },
 });
 
