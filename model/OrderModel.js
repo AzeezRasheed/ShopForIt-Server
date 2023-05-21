@@ -32,10 +32,6 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
-    stretchedLenth: {
-      type: Number,
-      required: true,
-    },
     status: {
       type: String,
       enum: ["Pending", "Confirmed", "Shipped", "Delivered"],

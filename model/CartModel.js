@@ -12,6 +12,10 @@ const cartItemSchema = new Schema({
     required: true,
     default: 1,
   },
+  stretchedLength: {
+    type: Number,
+    required: true,
+  },
 });
 
 const cartSchema = new Schema({

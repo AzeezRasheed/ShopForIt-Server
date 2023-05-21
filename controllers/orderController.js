@@ -5,8 +5,7 @@ const moment = require("moment");
 // const User = require("../model/userModel");
 
 const createOrder = asyncHandler(async (req, res) => {
-  const { cartId, paymentMethod, shippingAddress, totalPrice, stretchedLenth } =
-    req.body;
+  const { cartId, paymentMethod, shippingAddress, totalPrice } = req.body;
 
   try {
     const cart = await Cart.findById({ _id: cartId }).populate("items.product");
@@ -23,7 +22,6 @@ const createOrder = asyncHandler(async (req, res) => {
       paymentMethod,
       shippingAddress,
       totalPrice,
-      stretchedLenth,
       // Other order details
     });
 
@@ -42,8 +40,7 @@ const createOrder = asyncHandler(async (req, res) => {
 // Update Order
 const updateOrder = asyncHandler(async (req, res) => {
   const { orderId } = req.params;
-  const { paymentMethod, shippingAddress, totalPrice, stretchedLenth } =
-    req.body;
+  const { paymentMethod, shippingAddress, totalPrice } = req.body;
 
   try {
     const order = await Order.findById(orderId);
@@ -56,7 +53,6 @@ const updateOrder = asyncHandler(async (req, res) => {
     order.paymentMethod = paymentMethod || order.paymentMethod;
     order.shippingAddress = shippingAddress || order.shippingAddress;
     order.totalPrice = totalPrice || order.totalPrice;
-    order.stretchedLenth = stretchedLenth || order.stretchedLenth;
 
     const updatedOrder = await order.save();
     res.status(200).json(updatedOrder);
