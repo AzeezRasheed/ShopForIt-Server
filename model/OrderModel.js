@@ -1,6 +1,45 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const billingDetailsSchema = new Schema({
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  tel_whatsapp: {
+    type: number,
+    required: true,
+  },
+  orderNotes: {
+    type: String,
+    required: true,
+  },
+});
+
 const orderItemSchema = new Schema({
   product: {
     type: mongoose.Types.ObjectId,
@@ -24,8 +63,8 @@ const orderSchema = new Schema(
       type: [orderItemSchema],
       required: true,
     },
-    shippingAddress: {
-      type: String,
+    billingDetails: {
+      type: [billingDetailsSchema],
       required: true,
     },
     totalPrice: {
