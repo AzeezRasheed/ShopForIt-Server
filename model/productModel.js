@@ -38,56 +38,59 @@ const descriptionSchema = Schema({
   },
 });
 
-const productSchema = new Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
+const productSchema = new Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    descriptions: {
+      type: [descriptionSchema],
+      required: true,
+    },
+    images: {
+      type: [Object],
+      required: true,
+    },
+    categories: {
+      type: [Number],
+      required: true,
+    },
+    additionalInfo: {
+      type: [infoSchema],
+    },
+    oldPrice: {
+      type: Number,
+      required: true,
+    },
+    newPrice: {
+      type: Number,
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
+    event: {
+      type: String,
+      enum: ["Black Friday ", "Easter", null],
+      default: null,
+    },
+    collections: {
+      type: String,
+      enum: ["Wigs", "Extensions", "Accessories", null],
+      default: null,
+    },
+    ratings: [ratingSchema],
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  descriptions: {
-    type: [descriptionSchema],
-    required: true,
-  },
-  images: {
-    type: [Object],
-    required: true,
-  },
-  categories: {
-    type: [Number],
-    required: true,
-  },
-  additionalInfo: {
-    type: [infoSchema],
-  },
-  oldPrice: {
-    type: Number,
-    required: true,
-  },
-  newPrice: {
-    type: Number,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-  event: {
-    type: String,
-    enum: ["Black Friday ", "Easter", null],
-    default: null,
-  },
-  collections: {
-    type: String,
-    enum: ["Wigs", "Extensions", "Accessories", null],
-    default: null,
-  },
-  ratings: [ratingSchema],
-});
+  { timestamps: true }
+);
 
 const Product = mongoose.model("Product", productSchema);
 // Drop the index on ratings.user field
