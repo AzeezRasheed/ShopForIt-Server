@@ -33,7 +33,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      // "https://rashie-mern-stack-inventory-app.vercel.app",
+      "https://shop-for-it.vercel.app",
     ],
     credentials: true,
   })
