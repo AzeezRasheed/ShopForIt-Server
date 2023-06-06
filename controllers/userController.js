@@ -36,7 +36,7 @@ const registerUser = asyncHandler(async (req, res) => {
     lastname,
     email,
     password,
-    isAdmin: true,
+    isAdmin: false,
   });
 
   //then we generate a token for the user
@@ -160,6 +160,86 @@ const isUserLoggedIn = asyncHandler(async (req, res) => {
 });
 
 //logout user
+const logout = asyncHandler((req, res) => {
+  // Send HTTP-only cookie
+  res.cookie("token", "", {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(Date.now(0)), // it expires straight away
+    sameSite: "none",
+    secure: true,
+  });
+  return res.status(200).json({ message: "Successfully logged out" });
+});
+
+// Get Login Status
+const loginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json(false);
+  }
+  // Verify Token
+  const verified = jwt.verify(token, process.env.JWT_SECRET);
+  if (verified) {
+    return res.json(true);
+  }
+  return res.json(false);
+});
+
+const updateUser = asyncHandler(async (req, res) => {
+  //check if user already exists
+  const userExists = await User.findOne(req.user._id);
+  if (userExists) {
+    const { name, email, photo, phone, bio } = userExists;
+
+    userExists.name = req.body.name || name;
+    userExists.email = email;
+    userExists.photo = req.body.photo || photo;
+    userExists.phone = req.body.phone || phone;
+    userExists.bio = req.body.bio || bio;
+
+    const updatedUser = await userExists.save();
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      photo: updatedUser.photo,
+      phone: updatedUser.phone,
+      bio: updatedUser.bio,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+const changePassword = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  //check if there is no user
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  const { oldPassword, password } = req.body;
+  //check if there is no old and new password
+  if (!oldPassword && !password) {
+    res.status(400);
+    throw new Error("Please input a new password");
+  }
+
+  //compare the old and new password
+  const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
+
+  if (user && passwordIsCorrect) {
+    user.password = password;
+    await user.save();
+    res.status(200).send("Password successfully changed");
+  } else {
+    res.status(400);
+    throw new Error("Old Password is incorrect");
+  }
+});
 
 module.exports = {
   registerUser,
@@ -167,4 +247,8 @@ module.exports = {
   getAllUsers,
   getUser,
   isUserLoggedIn,
+  logout,
+  loginStatus,
+  updateUser,
+  changePassword,
 };

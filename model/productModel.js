@@ -78,7 +78,7 @@ const productSchema = new Schema({
   },
   event: {
     type: String,
-    enum: ["Black Friday", "Easter Sunday", null],
+    enum: ["Black Friday ", "Easter", null],
     default: null,
   },
   collections: {
