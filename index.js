@@ -33,6 +33,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
+      "http://localhost:3001",
       "https://shop-for-it.vercel.app",
     ],
     credentials: true,
