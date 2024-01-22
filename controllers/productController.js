@@ -91,10 +91,10 @@ const updateProduct = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 
-  if (product.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
+  // if (product.user.toString() !== req.user.id) {
+  //   res.status(401);
+  //   throw new Error("User not authorized");
+  // }
 
   if (product) {
     let fileData = [];
@@ -181,10 +181,10 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 
-  if (product.user.toString() !== req.user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
+  // if (product.user.toString() !== req.user.id) {
+  //   res.status(401);
+  //   throw new Error("User not authorized");
+  // }
 
   await Product.findOneAndDelete({ _id: id });
   res.status(200).json("Successful Deleted Product");
