@@ -149,15 +149,33 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 //get products
 const getProducts = asyncHandler(async (req, res) => {
-  const product = await Product.find({});
+  let products;
+  let query = {};
 
-  if (!product) {
-    res.status(404);
-    throw new Error("Product not found");
+  const { category, event } = req.query;
+
+  if (category) {
+    query.collections = category;
   }
 
-  res.status(200);
-  res.json(product);
+  if (event) {
+    query.event = event;
+  }
+
+  if (Object.keys(query).length > 0) {
+    // If queries are provided, filter products by queries
+    products = await Product.find(query);
+  } else {
+    // If no queries are provided, get all products
+    products = await Product.find({});
+  }
+
+  if (!products || products.length === 0) {
+    res.status(404);
+    throw new Error("Products not found");
+  }
+
+  res.status(200).json(products);
 });
 
 const getSingleProduct = asyncHandler(async (req, res) => {
