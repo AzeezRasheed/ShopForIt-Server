@@ -152,12 +152,15 @@ const getProducts = asyncHandler(async (req, res) => {
   let products;
   let query = {};
 
-  const { category, event } = req.query;
+  const { category, event, minPrice, maxPrice } = req.query;
+
+  if (minPrice && maxPrice) {
+    query.newPrice = { $gte: minPrice, $lte: maxPrice }; // syntax for price range
+  }
 
   if (category) {
     query.collections = category;
   }
-
   if (event) {
     query.event = event;
   }
