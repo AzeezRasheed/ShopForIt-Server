@@ -35,6 +35,9 @@ const billingDetailsSchema = new Schema({
   orderNotes: {
     type: String,
   },
+  shippingLocation: {
+    type: String,
+  },
 });
 
 const orderItemSchema = new Schema({
