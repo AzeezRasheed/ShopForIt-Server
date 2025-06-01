@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.33.0 (3ce457399)
+  labels:
+    io.kompose.service: shop-for-it
+  name: shop-for-it
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: shop-for-it
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.33.0 (3ce457399)
+      labels:
+        io.kompose.network/shopforit-server-default: "true"
+        io.kompose.service: shop-for-it
+    spec:
+      containers:
+        - image: dahumbletechboy/shop-for-it-server:v1
+          name: shop-for-it
+          ports:
+            - containerPort: 5000
+              hostPort: 5000
+              protocol: TCP
+      restartPolicy: Always
